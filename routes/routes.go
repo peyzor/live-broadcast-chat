@@ -79,9 +79,17 @@ func Setup(e *echo.Echo) error {
 	}
 
 	root := e.Group("/", cMiddleware.CacheControl(0))
+	root.GET("", func(c echo.Context) error {
+		// Perform the redirect
+		return c.Redirect(http.StatusFound, "/live-chat")
+	})
 
 	root.GET("404", func(c echo.Context) error {
 		return c.Render(http.StatusOK, "404.html", map[string]any{})
+	})
+
+	root.GET("about", func(c echo.Context) error {
+		return c.Render(http.StatusOK, "about.html", map[string]any{})
 	})
 
 	root.GET("chatroom", func(c echo.Context) error {
@@ -90,7 +98,7 @@ func Setup(e *echo.Echo) error {
 		return nil
 	})
 
-	root.GET("live_chat", func(c echo.Context) error {
+	root.GET("live-chat", func(c echo.Context) error {
 		return c.Render(http.StatusOK, "live_chat.html", map[string]any{})
 	})
 
