@@ -24,12 +24,10 @@ func main() {
 		panic(fmt.Sprintln("failed to setup routes: ", err))
 	}
 
-	go func() {
-		err := e.Start(":8080")
-		if err != nil {
-			e.Logger.Warn(err)
-		}
-	}()
+	err = e.Start(":8080")
+	if err != nil {
+		e.Logger.Warn(err)
+	}
 }
 
 func customHTTPErrorHandler(err error, c echo.Context) {

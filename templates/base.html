@@ -1,0 +1,49 @@
+{{define "base.html"}}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        {{template "title" .}}
+    </title>
+
+    <meta name=”robots” content="index, follow">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/mystyles.css">
+    <link rel="stylesheet" href="/css/highlight_theme.css">
+    <script src="/js/highlight.js"></script>
+    <script src="/js/htmx1.7.js"></script>
+    <script>
+        hljs.configure({
+            ignoreUnescapedHTML: true
+        })
+        document.addEventListener("DOMContentLoaded", (e) => {
+            hljs.highlightAll();
+
+            document.addEventListener("htmx:afterSwap", (e) => {
+                hljs.highlightAll();
+            });
+        });
+    </script>
+
+</head>
+
+
+</html>
+<body>
+<nav class="navbar bg-base-100">
+    <div class="flex items-center flex-shrink-0 text-white mr-6">
+        <a href="/">
+            <img class="object-scale h-18 w-32" src="/strawhat.png"/>
+        </a>
+        <div class="w-full flex-grow flex items-center p-2">
+            <div class="block mt-4 text-grey-800 p-2">|</div>
+            <div class="text-sm flex-grow">
+                <a href="/about" class="btn btn-ghost normal-case text-lg">About Me</a>
+            </div>
+        </div>
+    </div>
+</nav>
+{{template "body" . }}
+</body>
+{{end}}

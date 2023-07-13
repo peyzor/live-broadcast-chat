@@ -6,6 +6,7 @@ require (
 	github.com/google/uuid v1.3.0
 	github.com/labstack/echo/v4 v4.10.2
 	github.com/labstack/gommon v0.4.0
+	github.com/russross/blackfriday/v2 v2.1.0
 )
 
 require (
