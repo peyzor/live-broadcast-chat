@@ -1,6 +1,7 @@
 package broadcast
 
 import (
+	"fmt"
 	"sync"
 
 	"github.com/google/uuid"
@@ -46,4 +47,18 @@ func (b *Broadcast) RemoveListener(l Listener) {
 	b.lock.Lock()
 	defer b.lock.Unlock()
 	delete(b.Listeners, l.ID)
+}
+
+func (b *Broadcast) Send(msg string) map[uuid.UUID]error {
+	errors := make(map[uuid.UUID]error)
+
+	for id, l := range b.Listeners {
+		select {
+		case l.Chan <- msg:
+		default:
+			errors[id] = fmt.Errorf("failed to send message to listener")
+		}
+	}
+
+	return errors
 }
